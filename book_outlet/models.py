@@ -11,14 +11,15 @@ class Book(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     author = models.CharField(null=True,max_length=100)
     is_bestselling = models.BooleanField(default=False)
-    slug = models.SlugField(null=False, default="", db_index=True)
+    slug = models.SlugField(null=False, default="",
+     db_index=True, blank=True) #editable= False made the variable ont show in the admin page
 
     def get_absolute_url(self):
         return reverse("book-details", args=[self.slug])
 
-    def save(self,*arg,**kwarg) :
-        self.slug = slugify(self.title)
-        return super().save(*arg,**kwarg)
+    # def save(self,*arg,**kwarg) :
+    #     self.slug = slugify(self.title)
+    #     return super().save(*arg,**kwarg)
     
 
     def __str__(self):
